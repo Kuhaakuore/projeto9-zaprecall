@@ -2,8 +2,14 @@ import styled from "styled-components";
 import logo from "../assets/images/logo.png";
 import cards from "../data";
 import CardsList from "./CardsList";
+import { useState } from "react";
 
 export default function MainScreen() {
+  const [displayedCards, setDisplayedCards] = useState([]);
+  const [turnedCards, setTurnedCards] = useState([]);
+  const [answeredCards, setAnsweredCards] = useState([]);
+  const [icons, setIcons] = useState([]);
+
   return (
     <>
       <Container>
@@ -11,9 +17,18 @@ export default function MainScreen() {
           <img src={logo} alt="" />
           <div>ZapRecall</div>
         </LogoContainer>
-        <CardsList cards={cards} />
+        <CardsList 
+        cards={cards}
+        displayedCards={displayedCards}
+        setDisplayedCards={setDisplayedCards}
+        turnedCards={turnedCards}
+        setTurnedCards={setTurnedCards}
+        answeredCards={answeredCards}
+        setAnsweredCards={setAnsweredCards} 
+        icons={icons}
+        setIcons={setIcons}/>
         <FooterContainer>
-            fotter
+
         </FooterContainer>
       </Container>
     </>
@@ -22,11 +37,13 @@ export default function MainScreen() {
 
 const Container = styled.div`
   width: 375px;
+  min-height: 100vh;
   background: #fb6b6b;
   border: 1px solid #dbdbdb;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const LogoContainer = styled.div`
@@ -60,7 +77,7 @@ const LogoContainer = styled.div`
 `;
 
 const FooterContainer = styled.footer`
-  width: 375px;
+  width: 100%;
   height: 70px;
   position: fixed;
   bottom: 0;
