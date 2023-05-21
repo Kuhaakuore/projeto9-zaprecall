@@ -17,18 +17,21 @@ export default function MainScreen() {
           <img src={logo} alt="" />
           <div>ZapRecall</div>
         </LogoContainer>
-        <CardsList 
-        cards={cards}
-        displayedCards={displayedCards}
-        setDisplayedCards={setDisplayedCards}
-        turnedCards={turnedCards}
-        setTurnedCards={setTurnedCards}
-        answeredCards={answeredCards}
-        setAnsweredCards={setAnsweredCards} 
-        icons={icons}
-        setIcons={setIcons}/>
+        <CardsList
+          cards={cards}
+          displayedCards={displayedCards}
+          setDisplayedCards={setDisplayedCards}
+          turnedCards={turnedCards}
+          setTurnedCards={setTurnedCards}
+          answeredCards={answeredCards}
+          setAnsweredCards={setAnsweredCards}
+          icons={icons}
+          setIcons={setIcons}
+        />
         <FooterContainer>
-
+          <CounterContainer>
+            {answeredCards.length}/{cards.length} CONCLUÍDOS
+          </CounterContainer>
         </FooterContainer>
       </Container>
     </>
@@ -78,10 +81,29 @@ const LogoContainer = styled.div`
 
 const FooterContainer = styled.footer`
   width: 100%;
-  height: 70px;
+  min-height: 70px;
   position: fixed;
   bottom: 0;
   left: 0;
   background: #ffffff;
   box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
+
+const MessageContainer = styled.div``;
+
+const CounterContainer = styled.div`
+  min-width: 145px;
+  min-height: 22px;
+  font-family: 'Recursive';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #333333;
+  margin-top: 9px;
+`;
+
+const IconsContainer = styled.div``;
