@@ -81,30 +81,45 @@ export default function Card({
       default:
         return "#333333";
     }
+  };
+
+  const dataTestValue = function getDataTestValue(icon) {
+    switch (icon) {
+        case incorrectIcon:
+          return "no-icon";
+  
+        case almostIcon:
+          return "partial-icon";
+  
+        case correctIcon:
+          return "zap-icon";
+  
+        default:
+          return "play-btn";
+      }
   }
 
   function displayCard() {
     if (turnedCards.includes(card)) {
       return (
-        <CardBack>
-          <p>{answer}</p>
+        <CardBack data-test="flashcard">
+          <p data-test="flashcard-text">{answer}</p>
           <div>
-            <Button
-              color="#FF3030"
-              onClick={() => answerCard("incorrect")}
-            >
+            <Button color="#FF3030" 
+            onClick={() => answerCard("incorrect")} 
+            data-test="no-btn">
               Não <br></br> lembrei
             </Button>
             <Button
               color="#FF922E"
               onClick={() => answerCard("almost-correct")}
+              data-test="partial-btn"
             >
               Quase não lembrei
             </Button>
-            <Button
-              color="#2FBE34"
-              onClick={() => answerCard("correct")}
-            >
+            <Button color="#2FBE34" 
+            onClick={() => answerCard("correct")}
+            data-test="zap-btn">
               Zap!
             </Button>
           </div>
@@ -112,16 +127,16 @@ export default function Card({
       );
     } else if (displayedCards.includes(card)) {
       return (
-        <CardFront>
-          <span>{question}</span>
-          <img src={turnArrow} alt="" onClick={turnCard} />
+        <CardFront data-test="flashcard">
+          <span data-test="flashcard-text">{question}</span>
+          <img src={turnArrow} alt="" onClick={turnCard} data-test="turn-btn"/>
         </CardFront>
       );
     }
     return (
-      <SCCard value={color(icon)}>
-        <span>Pergunta {index + 1}</span>
-        <img src={icon} alt="" onClick={displayQuestion} />
+      <SCCard value={color(icon)} data-test="flashcard">
+        <span data-test="flashcard-text">Pergunta {index + 1}</span>
+        <img src={icon} alt="" onClick={displayQuestion} data-test={dataTestValue(icon)}/>
       </SCCard>
     );
   }
@@ -140,6 +155,10 @@ const SCCard = styled.div`
   border-radius: 5px;
   padding: 0 15px;
 
+  @media (max-width: 300px) {
+    width: 100%;
+  }
+
   span {
     width: 87px;
     height: 19px;
@@ -152,6 +171,11 @@ const SCCard = styled.div`
       props.value !== "#333333" ? "line-through" : ""};
     color: ${(props) => props.value};
   }
+
+  img {
+    cursor: ${(props) =>
+      props.value !== "#333333" ? "" : "pointer"};
+  }
 `;
 
 const CardFront = styled.div`
@@ -161,6 +185,10 @@ const CardFront = styled.div`
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   position: relative;
+
+  @media (max-width: 300px) {
+    width: 100%;
+  }
 
   span {
     position: absolute;
@@ -174,6 +202,9 @@ const CardFront = styled.div`
     font-size: 18px;
     line-height: 22px;
     color: #333333;
+    @media (max-width: 300px) {
+      width: 85%;
+    }
   }
 
   img {
@@ -182,6 +213,7 @@ const CardFront = styled.div`
     position: absolute;
     bottom: 6px;
     right: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -194,6 +226,10 @@ const CardBack = styled.div`
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 300px) {
+    width: 100%;
+  }
+
   p {
     width: 269px;
     font-family: "Recursive";
@@ -203,6 +239,9 @@ const CardBack = styled.div`
     line-height: 22px;
     color: #333333;
     margin: 18px 15px 0 15px;
+    @media (max-width: 300px) {
+      width: 87%;
+    }
   }
 
   div {
@@ -216,7 +255,7 @@ const CardBack = styled.div`
 
 const Button = styled.button`
   width: 85px;
-  height: 37px;
+  min-height: 37px;
   background-color: ${(props) => props.color};
   border-radius: 5px;
   border: none;
@@ -227,4 +266,5 @@ const Button = styled.button`
   line-height: 14px;
   text-align: center;
   color: #ffffff;
+  cursor: pointer;
 `;

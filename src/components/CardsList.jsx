@@ -14,7 +14,8 @@ export default function CardsList({
 }) {
   return (
     <>
-      <SCCardsList>
+      <SCCardsList
+      value={icons.length === cards.length}>
         {cards.map((card, index) => (
           <Card
             key={index}
@@ -41,5 +42,5 @@ const SCCardsList = styled.div`
   gap: 25px;
   align-items: center;
   margin-top: 51px;
-  margin-bottom: 116px;
+  margin-bottom: ${props => props.value ? "190px" : "116px"}
 `;
